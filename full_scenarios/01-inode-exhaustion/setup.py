@@ -3,33 +3,40 @@ import sys
 import errno
 
 dir_name = "lotsoffiles"
-file_count = 200000  # A large number, may not be reached if inodes run out first
+counter = 0
 
-print(f"Attempting to create up to {file_count} small files in '{dir_name}'...")
+print(f"Starting to create files in '{dir_name}' until the filesystem runs out of inodes...")
 sys.stdout.flush()
 
 if not os.path.exists(dir_name):
     os.makedirs(dir_name)
 
 try:
-    for i in range(file_count):
+    # This loop will continue indefinitely until the OS throws an error
+    while True:
         # Create an empty file
-        with open(os.path.join(dir_name, f"file_{i}.tmp"), "w") as f:
+        with open(os.path.join(dir_name, f"file_{counter}.tmp"), "w") as f:
             pass
-        if (i + 1) % 10000 == 0:
-            print(f"Created {i + 1} files...")
+        
+        counter += 1
+        
+        # Provide progress feedback every 10,000 files
+        if counter % 10000 == 0:
+            print(f"Created {counter} files...")
             sys.stdout.flush()
-    print(f"Successfully created {file_count} files without error.")
+
 except OSError as e:
+    # This is the expected error when we run out of inodes or data blocks
     if e.errno == errno.ENOSPC:
-        print(f"\nSUCCESS (for the demo): Ran out of space at file number {i}.")
-        print("The system is now in a state where it may report 'No space left on device' for new files.")
+        print(f"\nSUCCESS (for the demo): The OS reported 'No space left on device' after creating {counter} files.")
+        print("This is the desired state for the scenario.")
         sys.stdout.flush()
     else:
-        print(f"\nAn unexpected OS error occurred: {e}")
+        print(f"\nAn unexpected OS error occurred after creating {counter} files: {e}")
         sys.stdout.flush()
 except Exception as e:
-    print(f"An unexpected error occurred: {e}")
+    print(f"\nAn unexpected generic error occurred after creating {counter} files: {e}")
+    sys.stdout.flush()
 
-print("\nThe setup script has finished. The scenario is ready.")
+print("\nThe setup script has finished. The scenario is ready for investigation.")
 sys.stdout.flush()
