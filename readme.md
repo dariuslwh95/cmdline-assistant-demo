@@ -8,7 +8,7 @@ To install or set up the Command Line Assistant:
 
 1. **Install the CLI package**:
    ```bash
-   sudo dnf install commandline-assistant
+   sudo dnf install command-line-assistant
    ```
 
 2. **Configure the endpoint**:
