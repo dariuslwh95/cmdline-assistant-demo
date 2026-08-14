@@ -7,5 +7,10 @@ if [ -z "$PIDS" ]; then
 else
   kill $PIDS
   echo "INFO: Sent termination signal to 'setup.py' process(es) with PIDs: $PIDS."
-  echo "INFO: The disk space should now be free."
 fi
+
+# Explicitly remove the created file
+echo "INFO: Removing the dynamically created large file..."
+rm -f dynamic_large_file.tmp
+
+echo "INFO: Cleanup complete. The disk space should now be fully free."
