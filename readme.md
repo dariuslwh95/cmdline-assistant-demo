@@ -33,6 +33,8 @@ The scenarios are numbered for easy navigation:
 *   **`02-io-error/`**: Simulated I/O errors on a block device.
 *   **`03-memory-exhaustion/`**: Memory hogging and OOM killer simulation.
 *   **`04-service-unresponsive/`**: Unresponsive network service.
+*   **`07-container-port-conflict/`**: Container startup failure due to port conflict.
+*   **`08-rhel-lifecycle-info/`**: Querying RHEL lifecycle and support status.
 
 ## Usage
 

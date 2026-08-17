@@ -37,9 +37,14 @@ A "misbehaving service" is now running. Imagine you are unaware of it and need t
 
 3.  To see which tool is "right," you try to create a file that is clearly larger than the space `df` reports as available (e.g., 3GB if `df` shows 2GB free).
     ```bash
-    fallocate -l 3G large_download.tmp
+    fallocate -l 5G large_download.tmp
     ```
 4.  The command fails instantly: `fallocate: large_download.tmp: fallocate failed: No space left on device`
+
+5.  Show a comparison between du and dh
+    ```bash
+    pwd
+    ```
 
 This confirms `df` is correct about the lack of space, making `du`'s conflicting report a complete mystery. You're stuck.
 
