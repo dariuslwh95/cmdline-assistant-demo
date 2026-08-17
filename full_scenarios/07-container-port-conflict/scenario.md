@@ -40,13 +40,13 @@ You've just deployed a new containerized application, but it's not coming online
 3.  You are unsure which process is occupying port 8080.
 
 #### Troubleshooting with `c`
-You consult `c` for assistance in diagnosing this container startup issue.
+You consult `c` for assistance in diagnosing this container startup issue. The `setup.sh` script has already saved the container's error output to `container_error.log`.
 
-1.  **Ask `c` about the container error.**
+1.  **Ask `c` about the container error, attaching the log file.**
     ```bash
-    c "My container (nginx:alpine) failed to start, reporting 'bind: address already in use' on port 8080. I don't know what's using it. How can I find out?"
+    c "My container (nginx:alpine) failed to start. I've attached the error log. Can you analyze it and tell me why it failed and what's using port 8080?" -a container_error.log
     ```
-    **Expected `c` Response:** The assistant should recognize this as a classic port conflict. It will explain that another process on the host machine is already listening on port 8080. It will likely suggest using tools like `lsof -i :8080` or `netstat -tulnp | grep 8080` to identify the process. It might also suggest checking `docker logs` or `podman logs` for more details, or even generating an `sos report` for deeper system analysis if simple checks don't suffice.
+    **Expected `c` Response:** The assistant should analyze the attached `container_error.log`. It will identify the "bind: address already in use" error on port 8080. It will then explain that another process on the host machine is already listening on port 8080 and suggest using tools like `lsof -i :8080` or `netstat -tulnp | grep 8080` to identify the process.
 
 2.  **Run the suggested command and ask for interpretation.** You execute the suggested command (e.g., `lsof`) and feed its output to `c`.
     ```bash

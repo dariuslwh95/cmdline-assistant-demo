@@ -47,4 +47,11 @@ if [ -n "$CONTAINER_CMD" ]; then
     fi
 fi
 
+# Remove the container error log file
+CONTAINER_ERROR_LOG="container_error.log"
+if [ -f "$CONTAINER_ERROR_LOG" ]; then
+    echo "Removing container error log file: $CONTAINER_ERROR_LOG"
+    rm -f "$CONTAINER_ERROR_LOG"
+fi
+
 echo "--- Cleanup complete ---"

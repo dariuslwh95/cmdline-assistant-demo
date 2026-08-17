@@ -43,10 +43,13 @@ echo "This command is expected to fail with a port conflict error."
 # Run a simple nginx container that tries to bind to the same port
 # We use --rm to clean up the container automatically on exit/failure
 # We do NOT run in detached mode so we can see the error immediately
-$CONTAINER_CMD run --rm --name failing_nginx -p $PORT:$PORT nginx:alpine
+CONTAINER_ERROR_LOG="container_error.log"
+echo "Container error logs will be saved to $CONTAINER_ERROR_LOG"
+$CONTAINER_CMD run --rm --name failing_nginx -p $PORT:$PORT nginx:alpine 2> $CONTAINER_ERROR_LOG
 
 if [ $? -ne 0 ]; then
     echo "SUCCESS: The container failed to start as expected due to port conflict."
+    echo "The full error output has been saved to $CONTAINER_ERROR_LOG"
     echo "The scenario is now set up. The dummy server is still running on port $PORT."
     echo "To clean up, run: bash cleanup.sh"
 else
